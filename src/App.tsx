@@ -1,15 +1,13 @@
 import './App.scss'
 import {THEME, TonConnectUIProvider} from "@tonconnect/ui-react";
-import {Header} from "./components/Header/Header";
 import {TxForm} from "./components/TxForm/TxForm";
-import {Footer} from "./components/Footer/Footer";
-import {TonProofDemo} from "./components/TonProofDemo/TonProofDemo";
-import {CreateJettonDemo} from "./components/CreateJettonDemo/CreateJettonDemo";
+import {TonConnectButton} from "@tonconnect/ui-react"
+
 
 function App() {
   return (
       <TonConnectUIProvider
-          manifestUrl="https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json"
+          manifestUrl="https://raw.githubusercontent.com/grachzyyy/manifest/refs/heads/main/tonconnect-manifest.json"
           uiPreferences={{ theme: THEME.DARK }}
           walletsListConfiguration={{
             includeWallets: [
@@ -220,11 +218,10 @@ function App() {
           }}
       >
         <div className="app">
-            <Header />
+        <div className='button'><TonConnectButton /></div>
             <TxForm />
-            <CreateJettonDemo />
-            <TonProofDemo />
-            <Footer />
+            
+            
         </div>
       </TonConnectUIProvider>
   )
