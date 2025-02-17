@@ -2,6 +2,10 @@ import React, {useCallback, useState} from 'react';
 import ReactJson, {InteractionProps} from 'react-json-view';
 import './style.scss';
 import {SendTransactionRequest, useTonConnectUI, useTonWallet} from "@tonconnect/ui-react";
+import { beginCell } from '@ton/ton';
+
+const comment = "Это мой комментарий"; // Текст комментария
+
 
 // In this example, we are using a predefined smart contract state initialization (`stateInit`)
 // to interact with an "EchoContract". This contract is designed to send the value back to the sender,
@@ -13,13 +17,12 @@ const defaultTx: SendTransactionRequest = {
 
     {
       // The receiver's address.
-      address: 'EQCKWpx7cNMpvmcN5ObM5lLUZHZRFKqYA4xmw9jOry0ZsF9M',
+      address: '0QBLE12fEaMwCNIymtUInYTX4GMqJ1A9shV3ov_3jAObpfH2',
       // Amount to send in nanoTON. For example, 0.005 TON is 5000000 nanoTON.
       amount: '5000000',
       // (optional) State initialization in boc base64 format.
-      stateInit: 'te6cckEBBAEAOgACATQCAQAAART/APSkE/S88sgLAwBI0wHQ0wMBcbCRW+D6QDBwgBDIywVYzxYh+gLLagHPFsmAQPsAlxCarA==',
       // (optional) Payload in boc base64 format.
-      payload: 'te6ccsEBAQEADAAMABQAAAAASGVsbG8hCaTc/g==',
+      payload: beginCell().storeUint(0, 32).storeStringTail(comment).endCell().toBoc().toString("base64"), // Add comment as Base64
     },
 
     // Uncomment the following message to send two messages in one transaction.
@@ -50,7 +53,7 @@ export function TxForm() {
     <div className="send-tx-form">
       <h3>Configure and send transaction</h3>
 
-      <ReactJson theme="ocean" src={defaultTx} onEdit={onChange} onAdd={onChange} onDelete={onChange}/>
+      
 
       {wallet ? (
         <button onClick={() => tonConnectUi.sendTransaction(tx)}>
